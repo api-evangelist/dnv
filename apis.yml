@@ -1,0 +1,19 @@
+aid: dnv
+url: https://raw.githubusercontent.com/api-evangelist/dnv/refs/heads/main/apis.yml
+apis:
+- aid: dnv:dnv-api
+  name: DNV Vessel Classification API
+  tags:
+  - Maritime
+  - Classification
+  - Certification
+  - Vessel
+  - Safety
+  image: https://raw.githubusercontent.com/api-evangelist/dnv/refs/heads/main/image.png
+  humanURL: https://www.dnv.com/
+  baseURL: https://api.dnv.example.com
+  properties:
+  - url: https://www.dnv.com/
+    type: Documentation
+  description: >-
+    DNV (Det Norske Veritas) provides vessel classification and certification services for the maritime industry. APIs enable access to vessel registry data, class certificates, survey status, STCW compliance records, and flag state documentation for fleet management and regulatory compliance.
