@@ -1,0 +1,435 @@
+openapi: 3.1.0
+info:
+  title: DNV Class Status API
+  description: >-
+    DNV's Class Status API provides programmatic access to vessel classification data.
+    Authentication uses OAuth 2.0 with Azure AD B2C as the identity provider. Access tokens
+    are obtained from the Microsoft identity platform and are valid for approximately 20 minutes.
+    Access requires a separate API contract with DNV. The API supports retry logic using
+    exponential backoff for resilience.
+  version: 1.0.0
+  contact:
+    name: DNV Support
+    url: https://help-center.veracity.com/en/
+  license:
+    name: DNV Terms
+    url: https://www.dnv.com/terms/
+servers:
+  - url: https://maritime.dnv.com/api/cs-iacs-customer
+    description: DNV Class Status API Production
+security:
+  - oauth2: []
+tags:
+  - name: Vessels
+    description: Vessel classification status and information
+  - name: Certificates
+    description: Classification certificates and survey documents
+  - name: Surveys
+    description: Survey schedules and records
+paths:
+  /vessels:
+    get:
+      operationId: searchVessels
+      summary: Search vessels by classification criteria
+      description: >-
+        Searches for vessels in DNV's classification register. Supports filtering by vessel name,
+        IMO number, flag state, ship type, and classification status. Returns vessel summaries
+        including class notation and current status.
+      tags:
+        - Vessels
+      parameters:
+        - name: imoNumber
+          in: query
+          description: IMO vessel identification number (7 digits)
+          schema:
+            type: string
+            pattern: '^[0-9]{7}$'
+        - name: vesselName
+          in: query
+          description: Vessel name (partial match supported)
+          schema:
+            type: string
+        - name: flagState
+          in: query
+          description: ISO 3166-1 alpha-2 country code for flag state
+          schema:
+            type: string
+            pattern: '^[A-Z]{2}$'
+        - name: shipType
+          in: query
+          description: DNV ship type classification code
+          schema:
+            type: string
+        - name: classStatus
+          in: query
+          description: Current class status filter
+          schema:
+            type: string
+            enum: [CLASSED, SUSPENDED, WITHDRAWN, DELETED]
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 50
+            maximum: 200
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+      responses:
+        '200':
+          description: List of vessels matching search criteria
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VesselList'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/VesselList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /vessels/{imoNumber}:
+    get:
+      operationId: getVessel
+      summary: Get vessel classification details
+      description: >-
+        Returns detailed classification information for a specific vessel identified by IMO number,
+        including class notation, survey status, and certificates.
+      tags:
+        - Vessels
+      parameters:
+        - name: imoNumber
+          in: path
+          required: true
+          description: IMO vessel identification number (7 digits)
+          schema:
+            type: string
+            pattern: '^[0-9]{7}$'
+        - name: Accept
+          in: header
+          description: Response format
+          schema:
+            type: string
+            default: application/json
+            enum: [application/json, application/xml]
+      responses:
+        '200':
+          description: Vessel classification details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vessel'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Vessel'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /vessels/{imoNumber}/certificates:
+    get:
+      operationId: getVesselCertificates
+      summary: Get vessel classification certificates
+      description: >-
+        Returns all classification certificates for the specified vessel. A single request may
+        return multiple files as multipart content with boundary markers separating each file.
+      tags:
+        - Certificates
+      parameters:
+        - name: imoNumber
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: '^[0-9]{7}$'
+        - name: certificateType
+          in: query
+          description: Filter by certificate type
+          schema:
+            type: string
+            enum: [CLASS, STATUTORY, SURVEY_REPORT, ENTRY_IN_CLASS]
+        - name: status
+          in: query
+          description: Filter by certificate validity status
+          schema:
+            type: string
+            enum: [VALID, EXPIRED, WITHDRAWN]
+      responses:
+        '200':
+          description: Vessel certificates
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CertificateList'
+            multipart/mixed:
+              schema:
+                type: string
+                format: binary
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /vessels/{imoNumber}/surveys:
+    get:
+      operationId: getVesselSurveys
+      summary: Get vessel survey records and schedule
+      description: Returns the survey schedule and history for a specific vessel.
+      tags:
+        - Surveys
+      parameters:
+        - name: imoNumber
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: '^[0-9]{7}$'
+        - name: surveyType
+          in: query
+          description: Filter by survey type
+          schema:
+            type: string
+            enum: [ANNUAL, INTERMEDIATE, SPECIAL, DOCKING, CONTINUOUS, RENEWAL]
+      responses:
+        '200':
+          description: Survey records and schedule
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SurveyList'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /fleets:
+    get:
+      operationId: getFleetStatus
+      summary: Get fleet classification status
+      description: >-
+        Returns classification status for a fleet of vessels. Useful for fleet managers
+        to monitor the overall compliance status of their vessels.
+      tags:
+        - Vessels
+      parameters:
+        - name: imoNumbers
+          in: query
+          description: Comma-separated list of IMO numbers (max 100)
+          schema:
+            type: string
+        - name: includeExpiredCerts
+          in: query
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          description: Fleet status summary
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FleetStatus'
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: >-
+        OAuth 2.0 via Azure AD B2C. Tokens obtained from
+        https://login.microsoftonline.com/dnvglb2cprod.onmicrosoft.com/oauth2/token
+        using client credentials grant with resource ID c916a223-f3d4-4d43-b709-cfcd77ff4a05.
+      flows:
+        clientCredentials:
+          tokenUrl: https://login.microsoftonline.com/dnvglb2cprod.onmicrosoft.com/oauth2/token
+          scopes:
+            class_status:read: Read vessel classification status
+  schemas:
+    VesselList:
+      type: object
+      properties:
+        total:
+          type: integer
+        offset:
+          type: integer
+        vessels:
+          type: array
+          items:
+            $ref: '#/components/schemas/VesselSummary'
+    VesselSummary:
+      type: object
+      properties:
+        imoNumber:
+          type: string
+          description: IMO vessel identification number
+        vesselName:
+          type: string
+        flagState:
+          type: string
+          description: ISO 3166-1 alpha-2 flag state code
+        shipType:
+          type: string
+        classStatus:
+          type: string
+          enum: [CLASSED, SUSPENDED, WITHDRAWN, DELETED]
+        classNotation:
+          type: string
+          description: Full DNV class notation string
+    Vessel:
+      allOf:
+        - $ref: '#/components/schemas/VesselSummary'
+        - type: object
+          properties:
+            vesselOwner:
+              type: string
+            technicalManager:
+              type: string
+            buildYear:
+              type: integer
+            grossTonnage:
+              type: number
+            deadweightTonnage:
+              type: number
+            length:
+              type: number
+              description: Length overall in meters
+            beam:
+              type: number
+              description: Breadth in meters
+            draught:
+              type: number
+              description: Maximum draught in meters
+            mainEngineType:
+              type: string
+            mainEnginePower:
+              type: number
+              description: Main engine output in kW
+            hullMaterial:
+              type: string
+              enum: [STEEL, ALUMINUM, GRP, WOOD]
+            surveys:
+              $ref: '#/components/schemas/SurveySummary'
+            nextSurveyDue:
+              type: string
+              format: date
+    CertificateList:
+      type: object
+      properties:
+        imoNumber:
+          type: string
+        certificates:
+          type: array
+          items:
+            $ref: '#/components/schemas/Certificate'
+    Certificate:
+      type: object
+      properties:
+        certificateId:
+          type: string
+        certificateType:
+          type: string
+          enum: [CLASS, STATUTORY, SURVEY_REPORT, ENTRY_IN_CLASS]
+        title:
+          type: string
+        issueDate:
+          type: string
+          format: date
+        expiryDate:
+          type: string
+          format: date
+        status:
+          type: string
+          enum: [VALID, EXPIRED, WITHDRAWN]
+        issuingOffice:
+          type: string
+    SurveyList:
+      type: object
+      properties:
+        imoNumber:
+          type: string
+        surveys:
+          type: array
+          items:
+            $ref: '#/components/schemas/Survey'
+    Survey:
+      type: object
+      properties:
+        surveyId:
+          type: string
+        surveyType:
+          type: string
+          enum: [ANNUAL, INTERMEDIATE, SPECIAL, DOCKING, CONTINUOUS, RENEWAL]
+        surveyDate:
+          type: string
+          format: date
+        nextDueDate:
+          type: string
+          format: date
+        port:
+          type: string
+        surveyorName:
+          type: string
+        result:
+          type: string
+          enum: [PASSED, PASSED_WITH_CONDITIONS, FAILED, ONGOING]
+        remarks:
+          type: string
+    SurveySummary:
+      type: object
+      properties:
+        lastAnnualSurvey:
+          type: string
+          format: date
+        nextAnnualSurveyDue:
+          type: string
+          format: date
+        lastSpecialSurvey:
+          type: string
+          format: date
+        nextSpecialSurveyDue:
+          type: string
+          format: date
+    FleetStatus:
+      type: object
+      properties:
+        requestedCount:
+          type: integer
+        foundCount:
+          type: integer
+        vessels:
+          type: array
+          items:
+            type: object
+            properties:
+              imoNumber:
+                type: string
+              vesselName:
+                type: string
+              classStatus:
+                type: string
+              nextSurveyDue:
+                type: string
+                format: date
+              certificatesExpiringSoon:
+                type: integer
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        requestId:
+          type: string
+  responses:
+    Unauthorized:
+      description: Authentication token missing or expired
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: No API contract with DNV for this resource
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Vessel not found in DNV register
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

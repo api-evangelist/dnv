@@ -1,0 +1,95 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "dnv": "https://maritime.dnv.com/api/cs-iacs-customer/schemas/",
+    "schema": "https://schema.org/",
+    "mar": "https://www.w3.org/ns/maritime#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "Vessel": {
+      "@id": "dnv:Vessel",
+      "@type": "schema:Vehicle"
+    },
+    "Certificate": {
+      "@id": "dnv:Certificate",
+      "@type": "schema:Certification"
+    },
+    "Survey": {
+      "@id": "dnv:Survey",
+      "@type": "schema:Observation"
+    },
+
+    "imoNumber": {
+      "@id": "dnv:imoNumber",
+      "description": "IMO vessel identification number"
+    },
+    "vesselName": "schema:name",
+    "callSign": {
+      "@id": "dnv:callSign"
+    },
+    "flagState": {
+      "@id": "schema:countryOfOrigin"
+    },
+    "shipType": {
+      "@id": "schema:vehicleSpecialUsage"
+    },
+    "classStatus": {
+      "@id": "dnv:classificationStatus"
+    },
+    "classNotation": {
+      "@id": "dnv:classNotation"
+    },
+    "vesselOwner": {
+      "@id": "schema:owner",
+      "@type": "schema:Organization"
+    },
+    "technicalManager": {
+      "@id": "schema:provider",
+      "@type": "schema:Organization"
+    },
+    "grossTonnage": {
+      "@id": "schema:weight",
+      "@type": "schema:QuantitativeValue"
+    },
+    "deadweightTonnage": {
+      "@id": "dnv:deadweightTonnage"
+    },
+    "buildYear": {
+      "@id": "schema:modelDate",
+      "@type": "xsd:integer"
+    },
+    "shipyard": {
+      "@id": "schema:manufacturer",
+      "@type": "schema:Organization"
+    },
+    "enginePowerKW": {
+      "@id": "schema:enginePower",
+      "@type": "schema:QuantitativeValue"
+    },
+    "certificates": {
+      "@id": "dnv:hasCertificate",
+      "@container": "@set"
+    },
+    "issueDate": {
+      "@id": "schema:dateIssued",
+      "@type": "xsd:date"
+    },
+    "expiryDate": {
+      "@id": "schema:expires",
+      "@type": "xsd:date"
+    },
+    "surveyDate": {
+      "@id": "schema:startDate",
+      "@type": "xsd:date"
+    },
+    "nextDueDate": {
+      "@id": "dnv:nextSurveyDue",
+      "@type": "xsd:date"
+    },
+    "issuingOffice": {
+      "@id": "schema:issuedBy",
+      "@type": "schema:Organization"
+    }
+  }
+}

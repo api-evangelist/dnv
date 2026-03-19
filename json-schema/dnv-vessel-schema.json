@@ -1,0 +1,243 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://maritime.dnv.com/api/cs-iacs-customer/schemas/vessel",
+  "title": "DNV Classified Vessel",
+  "description": "Schema representing a vessel in the DNV classification register, including class status, certificates, and survey records.",
+  "type": "object",
+  "required": ["imoNumber", "vesselName", "classStatus"],
+  "properties": {
+    "imoNumber": {
+      "type": "string",
+      "description": "IMO vessel identification number assigned by the International Maritime Organization",
+      "pattern": "^[0-9]{7}$"
+    },
+    "vesselName": {
+      "type": "string",
+      "description": "Registered name of the vessel",
+      "maxLength": 100
+    },
+    "callSign": {
+      "type": "string",
+      "description": "Vessel radio call sign"
+    },
+    "flagState": {
+      "type": "string",
+      "description": "ISO 3166-1 alpha-2 country code for the flag state",
+      "pattern": "^[A-Z]{2}$"
+    },
+    "shipType": {
+      "type": "string",
+      "description": "DNV ship type classification",
+      "examples": ["General Cargo", "Bulk Carrier", "Tanker", "Container", "VLCC", "LNG Carrier", "Cruise Ship", "RORO"]
+    },
+    "classStatus": {
+      "type": "string",
+      "description": "Current classification status",
+      "enum": ["CLASSED", "SUSPENDED", "WITHDRAWN", "DELETED"]
+    },
+    "classNotation": {
+      "type": "string",
+      "description": "Full DNV class notation string (e.g., 1A1 Tanker ESP CSR)",
+      "examples": ["1A1 Tanker ESP CSR", "1A1 BulkCarrier ESP CSR", "1A1 ContainerShip CSR"]
+    },
+    "vesselOwner": {
+      "type": "string",
+      "description": "Legal vessel owner name"
+    },
+    "technicalManager": {
+      "type": "string",
+      "description": "Technical management company name"
+    },
+    "physicalDimensions": {
+      "$ref": "#/$defs/VesselDimensions"
+    },
+    "tonnage": {
+      "$ref": "#/$defs/VesselTonnage"
+    },
+    "buildInfo": {
+      "$ref": "#/$defs/BuildInfo"
+    },
+    "propulsion": {
+      "$ref": "#/$defs/PropulsionInfo"
+    },
+    "surveys": {
+      "$ref": "#/$defs/SurveySummary"
+    },
+    "certificates": {
+      "type": "array",
+      "description": "Active classification and statutory certificates",
+      "items": {
+        "$ref": "#/$defs/Certificate"
+      }
+    }
+  },
+  "$defs": {
+    "VesselDimensions": {
+      "type": "object",
+      "properties": {
+        "lengthOverall": {
+          "type": "number",
+          "description": "Length overall in meters",
+          "minimum": 0
+        },
+        "lengthBetweenPerpendiculars": {
+          "type": "number",
+          "description": "Length between perpendiculars in meters",
+          "minimum": 0
+        },
+        "beam": {
+          "type": "number",
+          "description": "Moulded breadth in meters",
+          "minimum": 0
+        },
+        "depth": {
+          "type": "number",
+          "description": "Moulded depth in meters",
+          "minimum": 0
+        },
+        "draught": {
+          "type": "number",
+          "description": "Maximum design draught in meters",
+          "minimum": 0
+        }
+      }
+    },
+    "VesselTonnage": {
+      "type": "object",
+      "properties": {
+        "grossTonnage": {
+          "type": "number",
+          "description": "Gross tonnage (GT) per ITC 1969",
+          "minimum": 0
+        },
+        "netTonnage": {
+          "type": "number",
+          "description": "Net tonnage (NT) per ITC 1969",
+          "minimum": 0
+        },
+        "deadweightTonnage": {
+          "type": "number",
+          "description": "Deadweight tonnage (DWT) in metric tons",
+          "minimum": 0
+        }
+      }
+    },
+    "BuildInfo": {
+      "type": "object",
+      "properties": {
+        "buildYear": {
+          "type": "integer",
+          "description": "Year vessel was built",
+          "minimum": 1800,
+          "maximum": 2100
+        },
+        "shipyard": {
+          "type": "string",
+          "description": "Name of the shipyard where vessel was built"
+        },
+        "shipyardCountry": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}$"
+        },
+        "hullNumber": {
+          "type": "string",
+          "description": "Shipyard hull construction number"
+        },
+        "hullMaterial": {
+          "type": "string",
+          "enum": ["STEEL", "ALUMINUM", "GRP", "WOOD", "COMPOSITE"]
+        }
+      }
+    },
+    "PropulsionInfo": {
+      "type": "object",
+      "properties": {
+        "engineType": {
+          "type": "string",
+          "examples": ["2-stroke diesel", "4-stroke diesel", "Gas turbine", "Electric", "LNG dual-fuel"]
+        },
+        "engineMake": {
+          "type": "string"
+        },
+        "enginePowerKW": {
+          "type": "number",
+          "description": "Main engine output in kilowatts",
+          "minimum": 0
+        },
+        "numberOfEngines": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "propellerType": {
+          "type": "string",
+          "enum": ["FIXED_PITCH", "CONTROLLABLE_PITCH", "AZIMUTH_THRUSTER", "VOITH_SCHNEIDER"]
+        }
+      }
+    },
+    "SurveySummary": {
+      "type": "object",
+      "properties": {
+        "lastAnnualSurveyDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "nextAnnualSurveyDue": {
+          "type": "string",
+          "format": "date"
+        },
+        "lastIntermediateSurveyDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "nextIntermediateSurveyDue": {
+          "type": "string",
+          "format": "date"
+        },
+        "lastSpecialSurveyDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "nextSpecialSurveyDue": {
+          "type": "string",
+          "format": "date"
+        },
+        "continuousSurveyMachinery": {
+          "type": "boolean"
+        }
+      }
+    },
+    "Certificate": {
+      "type": "object",
+      "required": ["certificateType", "status"],
+      "properties": {
+        "certificateId": {
+          "type": "string"
+        },
+        "certificateType": {
+          "type": "string",
+          "enum": ["CLASS", "STATUTORY", "SURVEY_REPORT", "ENTRY_IN_CLASS"]
+        },
+        "title": {
+          "type": "string",
+          "description": "Full certificate title"
+        },
+        "issueDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "expiryDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["VALID", "EXPIRED", "WITHDRAWN"]
+        },
+        "issuingOffice": {
+          "type": "string",
+          "description": "DNV office that issued the certificate"
+        }
+      }
+    }
+  }
+}
