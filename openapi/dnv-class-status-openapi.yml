@@ -20,12 +20,12 @@ servers:
 security:
   - oauth2: []
 tags:
-  - name: Vessels
-    description: Vessel classification status and information
   - name: Certificates
     description: Classification certificates and survey documents
   - name: Surveys
     description: Survey schedules and records
+  - name: Vessels
+    description: Vessel classification status and information
 paths:
   /vessels:
     get:

@@ -1,18 +1,16 @@
 aid: dnv
-url: 
-  https://raw.githubusercontent.com/api-evangelist/dnv/refs/heads/main/apis.yml
+url: https://raw.githubusercontent.com/api-evangelist/dnv/refs/heads/main/apis.yml
 apis:
   - aid: dnv:dnv-class-status-api
     name: DNV Class Status API
     tags:
-      - Maritime
-      - Classification
-      - Vessel
-      - Safety
-      - OAuth2
       - Azure AD
-    image: 
-      https://raw.githubusercontent.com/api-evangelist/dnv/refs/heads/main/image.png
+      - Classification
+      - Maritime
+      - OAuth2
+      - Safety
+      - Vessel
+    image: https://raw.githubusercontent.com/api-evangelist/dnv/refs/heads/main/image.png
     humanURL: https://maritime.dnv.com/api/cs-iacs-customer
     baseURL: https://maritime.dnv.com/api/cs-iacs-customer
     properties:
@@ -22,8 +20,7 @@ apis:
         type: Documentation
       - url: https://maritime.dnv.com/api/cs-iacs-customer
         type: Authentication
-      - url: 
-          https://raw.githubusercontent.com/api-evangelist/dnv/refs/heads/main/openapi/dnv-class-status-openapi.yml
+      - url: https://raw.githubusercontent.com/api-evangelist/dnv/refs/heads/main/openapi/dnv-class-status-openapi.yml
         type: OpenAPI
     description: >-
       DNV's Class Status API provides programmatic access to vessel classification
@@ -34,21 +31,18 @@ apis:
   - aid: dnv:dnv-veracity-api
     name: DNV Veracity Platform API
     tags:
-      - Maritime
-      - Data Platform
-      - IoT
       - Analytics
+      - Data Platform
       - Energy
-    image: 
-      https://raw.githubusercontent.com/api-evangelist/dnv/refs/heads/main/image.png
+      - IoT
+      - Maritime
+    image: https://raw.githubusercontent.com/api-evangelist/dnv/refs/heads/main/image.png
     humanURL: https://www.veracity.com/
     baseURL: https://api.veracity.com
     properties:
-      - url: 
-          https://developer.veracity.com/docs/section/api-explorer/api-explorer
+      - url: https://developer.veracity.com/docs/section/api-explorer/api-explorer
         type: Documentation
-      - url: 
-          https://developer.veracity.com/docs/section/datastandards/operationalvesseldata
+      - url: https://developer.veracity.com/docs/section/datastandards/operationalvesseldata
         type: Reference
       - url: https://www.veracity.com/
         type: Portal
@@ -61,12 +55,11 @@ apis:
   - aid: dnv:dnv-vessel-register-api
     name: DNV Vessel Register
     tags:
-      - Maritime
-      - Vessel Registry
       - Classification
       - Fleet Management
-    image: 
-      https://raw.githubusercontent.com/api-evangelist/dnv/refs/heads/main/image.png
+      - Maritime
+      - Vessel Registry
+    image: https://raw.githubusercontent.com/api-evangelist/dnv/refs/heads/main/image.png
     humanURL: https://vesselregister.dnv.com/vesselregister
     baseURL: https://vesselregister.dnv.com
     properties:
@@ -79,14 +72,11 @@ apis:
 common:
   - url: https://www.dnv.com/
     type: Website
-  - url: 
-      https://raw.githubusercontent.com/api-evangelist/dnv/refs/heads/main/openapi/dnv-class-status-openapi.yml
+  - url: https://raw.githubusercontent.com/api-evangelist/dnv/refs/heads/main/openapi/dnv-class-status-openapi.yml
     type: OpenAPI
-  - url: 
-      https://raw.githubusercontent.com/api-evangelist/dnv/refs/heads/main/json-schema/dnv-vessel-schema.json
+  - url: https://raw.githubusercontent.com/api-evangelist/dnv/refs/heads/main/json-schema/dnv-vessel-schema.json
     type: JSONSchema
-  - url: 
-      https://raw.githubusercontent.com/api-evangelist/dnv/refs/heads/main/json-ld/dnv-context.jsonld
+  - url: https://raw.githubusercontent.com/api-evangelist/dnv/refs/heads/main/json-ld/dnv-context.jsonld
     type: JSONLDContext
   - url: https://www.veracity.com/
     type: Portal
