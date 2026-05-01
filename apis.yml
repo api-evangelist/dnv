@@ -99,6 +99,17 @@ common:
 maintainers:
   - name: Kin Lane
     email: kin@apievangelist.com
-modified: '2026-03-18'
+modified: '2026-04-28'
+name: DNV
+tags:
+  - Maritime
+  - Energy
+  - Classification
+  - Vessel
+  - Data Platform
 description: >-
-  The API is documented using Swagger, please see API Documentation tab above.
+  DNV is a global classification, certification, and assurance provider for the
+  maritime, energy, and industrial sectors. The API portfolio includes the Class
+  Status API for vessel classification data, the Veracity industry data platform,
+  and the public Vessel Register, supporting fleet management, regulatory compliance,
+  and operational analytics workflows.

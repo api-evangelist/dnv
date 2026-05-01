@@ -1,10 +1,15 @@
-# Unknown (dnv)
+# DNV (dnv)
+DNV is a global classification, certification, and assurance provider for the maritime, energy, and industrial sectors. The API portfolio includes the Class Status API for vessel classification data, the Veracity industry data platform, and the public Vessel Register, supporting fleet management, regulatory compliance, and operational analytics workflows.
 
 **URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/dnv/refs/heads/main/apis.yml)
 
+## Tags:
+
+ - Maritime, Energy, Classification, Vessel, Data Platform
+
 ## Timestamps
 
-- **Modified:** 2026-03-18 
+- **Modified:** 2026-04-28 
 
 ## APIs
 
