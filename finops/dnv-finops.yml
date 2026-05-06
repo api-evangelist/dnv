@@ -1,5 +1,6 @@
 specification: FinOps Framework
 specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
 alignedWith:
   framework: FinOps Foundation Framework
   frameworkUrl: https://www.finops.org/framework/
@@ -8,147 +9,65 @@ alignedWith:
   dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
 provider: DNV
 providerId: dnv
-publisherName: DNV
-serviceCategory: API
+publisherName: DNV AS
+serviceCategory: Maritime Classification / Data Platform
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: false
 tags:
   - Maritime
-  - Energy
   - Classification
   - Vessel
-  - Data Platform
   - FinOps
-  - Cost Management
   - FOCUS
-description: FinOps framework definition for the DNV API surface. Provides a FOCUS-aligned mapping for
-  cost allocation, usage measurement, and unit-economics reporting across the provider's APIs.
-principles:
-  - name: Visibility
-    description: Make API consumption costs visible to engineering, product, and finance teams in near
-      real-time.
-  - name: Allocation
-    description: Tag every chargeable API call with the consuming team, environment, application, and
-      feature so cost can be allocated.
-  - name: Optimization
-    description: Continuously evaluate request patterns, caching, batching, and tier selection to reduce
-      cost per useful unit of work.
-  - name: Accountability
-    description: Establish budget owners and chargeback or showback flows for each consuming team.
-domains:
-  - name: Understand Usage and Cost
-    capabilities:
-      - Data Ingestion
-      - Allocation
-      - Reporting and Analytics
-      - Anomaly Management
-  - name: Quantify Business Value
-    capabilities:
-      - Planning and Estimating
-      - Forecasting
-      - Budgeting
-      - Benchmarking
-      - Unit Economics
-  - name: Optimize Usage and Cost
-    capabilities:
-      - Architecting for Cloud
-      - Rate Optimization
-      - Workload Optimization
-      - Cloud Sustainability
-      - Licensing and SaaS
-  - name: Manage the FinOps Practice
-    capabilities:
-      - FinOps Practice Operations
-      - FinOps Education and Enablement
-      - Invoicing and Chargeback
-      - Onboarding Workloads
-      - Intersecting Disciplines
+description: FOCUS-aligned FinOps shape for DNV Maritime APIs. DNV does not publish a per-call meter;
+  cost is governed by the negotiated API contract (often bundled with classification or advisory services).
+notes: No public pricing or per-meter billing is published; reconciled=false. Meters below describe the
+  consumption surface that a customer would observe internally.
+sources:
+  - https://maritime.dnv.com/api/cs-iacs-customer
+  - https://www.dnv.com/maritime/
 billingModel:
-  pricingCategory: Usage-Based
-  billingFrequency: Monthly
-  billingCurrency: USD
+  pricingCategory: Enterprise Contract
+  billingFrequency: Per-Invoice
+  billingCurrency: USD/EUR/NOK
   chargeCategories:
-    - Usage
     - Purchase
     - Tax
-    - Credit
-    - Adjustment
-  chargeFrequency: Recurring
 focusColumns:
-  ServiceName: DNV
-  ServiceCategory: Developer Tools / API
+  ServiceName: DNV Maritime APIs
+  ServiceCategory: Maritime Classification / Data Platform
   ProviderName: DNV
-  PublisherName: DNV
-  InvoiceIssuerName: DNV
-  PricingCategory: Usage-Based
-  PricingUnit: request
-  BillingCurrency: USD
-  ChargeCategory: Usage
+  PublisherName: DNV AS
+  InvoiceIssuerName: DNV AS
+  BillingCurrency: USD/EUR/NOK
+  ChargeCategory: Purchase
 meters:
   - name: api_requests
-    description: Count of billable API requests
+    description: Internal observability of calls against DNV APIs
     unit: request
     aggregation: sum
     dimensions:
       - api
-      - endpoint
-      - tier
-      - region
-      - consumer
-  - name: data_egress
-    description: Bytes returned over the network in API responses
-    unit: GB
-    aggregation: sum
+      - vessel_imo
+  - name: contract_seats
+    description: Active named technical contacts under the API contract
+    unit: seat
+    aggregation: count
     dimensions:
-      - api
-      - region
-      - consumer
-  - name: compute_seconds
-    description: Server-side compute consumed by the request, where applicable
-    unit: second
-    aggregation: sum
-    dimensions:
-      - api
-      - endpoint
-      - tier
-apis:
-  - name: DNV Class Status API
-    baseURL: https://maritime.dnv.com/api/cs-iacs-customer
-    tags:
-      - Azure AD
-      - Classification
-      - Maritime
-      - OAuth2
-      - Safety
-      - Vessel
-    serviceName: DNV Class Status API
-    serviceCategory: API
-  - name: DNV Veracity Platform API
-    baseURL: https://api.veracity.com
-    tags:
-      - Analytics
-      - Data Platform
-      - Energy
-      - IoT
-      - Maritime
-    serviceName: DNV Veracity Platform API
-    serviceCategory: API
-  - name: DNV Vessel Register
-    baseURL: https://vesselregister.dnv.com
-    tags:
-      - Classification
-      - Fleet Management
-      - Maritime
-      - Vessel Registry
-    serviceName: DNV Vessel Register
-    serviceCategory: API
-unitEconomics:
-  - name: Cost per 1K Requests
-    metric: billed_cost / (api_requests / 1000)
-    target: TBD
-  - name: Cost per Active Consumer
-    metric: billed_cost / active_consumers
-    target: TBD
+      - contract
+principles:
+  - name: Visibility
+    description: DNV invoices are issued under the API/classification contract; reconcile against contracted
+      services rather than per-call usage.
+  - name: Allocation
+    description: Allocate DNV cost to the fleet/vessel program that consumes class-status and IACS-75 data.
+  - name: Optimization
+    description: Cache class-status responses; reuse OAuth tokens (~20 min validity) across requests; coalesce
+      vessel-IMO lookups.
+  - name: Accountability
+    description: The named technical contact on the API contract is accountable for credential security
+      and adherence to the contracted scope.
 maintainers:
-  - name: Kin Lane
+  - FN: Kin Lane
     email: kin@apievangelist.com
