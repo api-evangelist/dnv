@@ -93,7 +93,7 @@ common:
   - url: https://www.dnv.com/terms/
     type: TermsOfService
   - url: https://vesselregister.dnv.com/vesselregister
-    type: Status
+    type: StatusPage
   - url: https://www.dnv.com/maritime/
     type: GettingStarted
 maintainers:
