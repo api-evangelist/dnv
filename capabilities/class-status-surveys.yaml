@@ -1,0 +1,85 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: DNV Class Status API — Surveys
+  description: 'DNV Class Status API — Surveys. 1 operations. Lead operation: Get vessel survey records and schedule. Self-contained
+    Naftiko capability covering one Dnv business surface.'
+  tags:
+  - Dnv
+  - Surveys
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    DNV_API_KEY: DNV_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: class-status-surveys
+    baseUri: https://maritime.dnv.com/api/cs-iacs-customer
+    description: DNV Class Status API — Surveys business capability. Self-contained, no shared references.
+    resources:
+    - name: vessels-imoNumber-surveys
+      path: /vessels/{imoNumber}/surveys
+      operations:
+      - name: getvesselsurveys
+        method: GET
+        description: Get vessel survey records and schedule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: imoNumber
+          in: path
+          type: string
+          required: true
+        - name: surveyType
+          in: query
+          type: string
+          description: Filter by survey type
+    authentication:
+      type: bearer
+      token: '{{env.DNV_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: class-status-surveys-rest
+    port: 8080
+    description: REST adapter for DNV Class Status API — Surveys. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/vessels/{imonumber}/surveys
+      name: vessels-imonumber-surveys
+      description: REST surface for vessels-imoNumber-surveys.
+      operations:
+      - method: GET
+        name: getvesselsurveys
+        description: Get vessel survey records and schedule
+        call: class-status-surveys.getvesselsurveys
+        with:
+          imoNumber: rest.imoNumber
+          surveyType: rest.surveyType
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: class-status-surveys-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for DNV Class Status API — Surveys. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: get-vessel-survey-records-and
+      description: Get vessel survey records and schedule
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: class-status-surveys.getvesselsurveys
+      with:
+        imoNumber: tools.imoNumber
+        surveyType: tools.surveyType
+      outputParameters:
+      - type: object
+        mapping: $.

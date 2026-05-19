@@ -1,0 +1,207 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: DNV Class Status API — Vessels
+  description: 'DNV Class Status API — Vessels. 3 operations. Lead operation: Get fleet classification status. Self-contained
+    Naftiko capability covering one Dnv business surface.'
+  tags:
+  - Dnv
+  - Vessels
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    DNV_API_KEY: DNV_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: class-status-vessels
+    baseUri: https://maritime.dnv.com/api/cs-iacs-customer
+    description: DNV Class Status API — Vessels business capability. Self-contained, no shared references.
+    resources:
+    - name: fleets
+      path: /fleets
+      operations:
+      - name: getfleetstatus
+        method: GET
+        description: Get fleet classification status
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: imoNumbers
+          in: query
+          type: string
+          description: Comma-separated list of IMO numbers (max 100)
+        - name: includeExpiredCerts
+          in: query
+          type: boolean
+    - name: vessels
+      path: /vessels
+      operations:
+      - name: searchvessels
+        method: GET
+        description: Search vessels by classification criteria
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: imoNumber
+          in: query
+          type: string
+          description: IMO vessel identification number (7 digits)
+        - name: vesselName
+          in: query
+          type: string
+          description: Vessel name (partial match supported)
+        - name: flagState
+          in: query
+          type: string
+          description: ISO 3166-1 alpha-2 country code for flag state
+        - name: shipType
+          in: query
+          type: string
+          description: DNV ship type classification code
+        - name: classStatus
+          in: query
+          type: string
+          description: Current class status filter
+        - name: limit
+          in: query
+          type: integer
+        - name: offset
+          in: query
+          type: integer
+    - name: vessels-imoNumber
+      path: /vessels/{imoNumber}
+      operations:
+      - name: getvessel
+        method: GET
+        description: Get vessel classification details
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: imoNumber
+          in: path
+          type: string
+          description: IMO vessel identification number (7 digits)
+          required: true
+        - name: Accept
+          in: header
+          type: string
+          description: Response format
+    authentication:
+      type: bearer
+      token: '{{env.DNV_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: class-status-vessels-rest
+    port: 8080
+    description: REST adapter for DNV Class Status API — Vessels. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/fleets
+      name: fleets
+      description: REST surface for fleets.
+      operations:
+      - method: GET
+        name: getfleetstatus
+        description: Get fleet classification status
+        call: class-status-vessels.getfleetstatus
+        with:
+          imoNumbers: rest.imoNumbers
+          includeExpiredCerts: rest.includeExpiredCerts
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/vessels
+      name: vessels
+      description: REST surface for vessels.
+      operations:
+      - method: GET
+        name: searchvessels
+        description: Search vessels by classification criteria
+        call: class-status-vessels.searchvessels
+        with:
+          imoNumber: rest.imoNumber
+          vesselName: rest.vesselName
+          flagState: rest.flagState
+          shipType: rest.shipType
+          classStatus: rest.classStatus
+          limit: rest.limit
+          offset: rest.offset
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/vessels/{imonumber}
+      name: vessels-imonumber
+      description: REST surface for vessels-imoNumber.
+      operations:
+      - method: GET
+        name: getvessel
+        description: Get vessel classification details
+        call: class-status-vessels.getvessel
+        with:
+          imoNumber: rest.imoNumber
+          Accept: rest.Accept
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: class-status-vessels-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for DNV Class Status API — Vessels. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: get-fleet-classification-status
+      description: Get fleet classification status
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: class-status-vessels.getfleetstatus
+      with:
+        imoNumbers: tools.imoNumbers
+        includeExpiredCerts: tools.includeExpiredCerts
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: search-vessels-classification-criteria
+      description: Search vessels by classification criteria
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: class-status-vessels.searchvessels
+      with:
+        imoNumber: tools.imoNumber
+        vesselName: tools.vesselName
+        flagState: tools.flagState
+        shipType: tools.shipType
+        classStatus: tools.classStatus
+        limit: tools.limit
+        offset: tools.offset
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-vessel-classification-details
+      description: Get vessel classification details
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: class-status-vessels.getvessel
+      with:
+        imoNumber: tools.imoNumber
+        Accept: tools.Accept
+      outputParameters:
+      - type: object
+        mapping: $.
