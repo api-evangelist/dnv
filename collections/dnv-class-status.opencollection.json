@@ -1,0 +1,201 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "DNV Class Status API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "https://login.microsoftonline.com/dnvglb2cprod.onmicrosoft.com/oauth2/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Vessels",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search vessels by classification criteria",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://maritime.dnv.com/api/cs-iacs-customer/vessels",
+            "params": [
+              {
+                "name": "imoNumber",
+                "value": "",
+                "type": "query",
+                "description": "IMO vessel identification number (7 digits)"
+              },
+              {
+                "name": "vesselName",
+                "value": "",
+                "type": "query",
+                "description": "Vessel name (partial match supported)"
+              },
+              {
+                "name": "flagState",
+                "value": "",
+                "type": "query",
+                "description": "ISO 3166-1 alpha-2 country code for flag state"
+              },
+              {
+                "name": "shipType",
+                "value": "",
+                "type": "query",
+                "description": "DNV ship type classification code"
+              },
+              {
+                "name": "classStatus",
+                "value": "",
+                "type": "query",
+                "description": "Current class status filter"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Searches for vessels in DNV's classification register. Supports filtering by vessel name, IMO number, flag state, ship type, and classification status. Returns vessel summaries including class notation and current status."
+        },
+        {
+          "info": {
+            "name": "Get vessel classification details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://maritime.dnv.com/api/cs-iacs-customer/vessels/:imoNumber",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "imoNumber",
+                "value": "",
+                "type": "path",
+                "description": "IMO vessel identification number (7 digits)"
+              }
+            ]
+          },
+          "docs": "Returns detailed classification information for a specific vessel identified by IMO number, including class notation, survey status, and certificates."
+        },
+        {
+          "info": {
+            "name": "Get fleet classification status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://maritime.dnv.com/api/cs-iacs-customer/fleets",
+            "params": [
+              {
+                "name": "imoNumbers",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of IMO numbers (max 100)"
+              },
+              {
+                "name": "includeExpiredCerts",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns classification status for a fleet of vessels. Useful for fleet managers to monitor the overall compliance status of their vessels."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Certificates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get vessel classification certificates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://maritime.dnv.com/api/cs-iacs-customer/vessels/:imoNumber/certificates",
+            "params": [
+              {
+                "name": "imoNumber",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "certificateType",
+                "value": "",
+                "type": "query",
+                "description": "Filter by certificate type"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by certificate validity status"
+              }
+            ]
+          },
+          "docs": "Returns all classification certificates for the specified vessel. A single request may return multiple files as multipart content with boundary markers separating each file."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Surveys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get vessel survey records and schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://maritime.dnv.com/api/cs-iacs-customer/vessels/:imoNumber/surveys",
+            "params": [
+              {
+                "name": "imoNumber",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "surveyType",
+                "value": "",
+                "type": "query",
+                "description": "Filter by survey type"
+              }
+            ]
+          },
+          "docs": "Returns the survey schedule and history for a specific vessel."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
