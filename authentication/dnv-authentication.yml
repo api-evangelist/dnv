@@ -1,0 +1,19 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/dnv-class-status-openapi.yml
+summary:
+  types:
+  - oauth2
+  oauth2_flows:
+  - clientCredentials
+schemes:
+- name: oauth2
+  type: oauth2
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://login.microsoftonline.com/dnvglb2cprod.onmicrosoft.com/oauth2/token
+    scopes: 1
+  description: OAuth 2.0 via Azure AD B2C. Tokens obtained from https://login.microsoftonline.com/dnvglb2cprod.onmicrosoft.com/oauth2/token
+    using client credentials grant with resource ID c916a223-f3d4-4d43-b709-cfcd77ff4a05.
+  sources:
+  - openapi/dnv-class-status-openapi.yml

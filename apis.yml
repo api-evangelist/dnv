@@ -67,6 +67,12 @@ apis:
       identification, classification status, certificates, and survey history. The register supports fleet management
       and regulatory compliance workflows.
 common:
+  - type: VulnerabilityDisclosure
+    url: security/dnv-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/dnv-domain-security.yml
+  - type: Authentication
+    url: authentication/dnv-authentication.yml
   - type: OAuthScopes
     url: scopes/dnv-scopes.yml
   - type: GitHubOrganization
