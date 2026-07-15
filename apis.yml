@@ -67,6 +67,8 @@ apis:
       identification, classification status, certificates, and survey history. The register supports fleet management
       and regulatory compliance workflows.
 common:
+  - type: AgenticAccess
+    url: agentic-access/dnv-agentic-access.yml
   - type: VulnerabilityDisclosure
     url: security/dnv-vulnerability-disclosure.yml
   - type: DomainSecurity
