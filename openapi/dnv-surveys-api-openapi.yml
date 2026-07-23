@@ -1,0 +1,124 @@
+openapi: 3.1.0
+info:
+  title: DNV Class Status Certificates Surveys API
+  description: DNV's Class Status API provides programmatic access to vessel classification data. Authentication uses OAuth 2.0 with Azure AD B2C as the identity provider. Access tokens are obtained from the Microsoft identity platform and are valid for approximately 20 minutes. Access requires a separate API contract with DNV. The API supports retry logic using exponential backoff for resilience.
+  version: 1.0.0
+  contact:
+    name: DNV Support
+    url: https://help-center.veracity.com/en/
+  license:
+    name: DNV Terms
+    url: https://www.dnv.com/terms/
+servers:
+- url: https://maritime.dnv.com/api/cs-iacs-customer
+  description: DNV Class Status API Production
+security:
+- oauth2: []
+tags:
+- name: Surveys
+  description: Survey schedules and records
+paths:
+  /vessels/{imoNumber}/surveys:
+    get:
+      operationId: getVesselSurveys
+      summary: Get vessel survey records and schedule
+      description: Returns the survey schedule and history for a specific vessel.
+      tags:
+      - Surveys
+      parameters:
+      - name: imoNumber
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: ^[0-9]{7}$
+      - name: surveyType
+        in: query
+        description: Filter by survey type
+        schema:
+          type: string
+          enum:
+          - ANNUAL
+          - INTERMEDIATE
+          - SPECIAL
+          - DOCKING
+          - CONTINUOUS
+          - RENEWAL
+      responses:
+        '200':
+          description: Survey records and schedule
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SurveyList'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    SurveyList:
+      type: object
+      properties:
+        imoNumber:
+          type: string
+        surveys:
+          type: array
+          items:
+            $ref: '#/components/schemas/Survey'
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        requestId:
+          type: string
+    Survey:
+      type: object
+      properties:
+        surveyId:
+          type: string
+        surveyType:
+          type: string
+          enum:
+          - ANNUAL
+          - INTERMEDIATE
+          - SPECIAL
+          - DOCKING
+          - CONTINUOUS
+          - RENEWAL
+        surveyDate:
+          type: string
+          format: date
+        nextDueDate:
+          type: string
+          format: date
+        port:
+          type: string
+        surveyorName:
+          type: string
+        result:
+          type: string
+          enum:
+          - PASSED
+          - PASSED_WITH_CONDITIONS
+          - FAILED
+          - ONGOING
+        remarks:
+          type: string
+  responses:
+    NotFound:
+      description: Vessel not found in DNV register
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: OAuth 2.0 via Azure AD B2C. Tokens obtained from https://login.microsoftonline.com/dnvglb2cprod.onmicrosoft.com/oauth2/token using client credentials grant with resource ID c916a223-f3d4-4d43-b709-cfcd77ff4a05.
+      flows:
+        clientCredentials:
+          tokenUrl: https://login.microsoftonline.com/dnvglb2cprod.onmicrosoft.com/oauth2/token
+          scopes:
+            class_status:read: Read vessel classification status

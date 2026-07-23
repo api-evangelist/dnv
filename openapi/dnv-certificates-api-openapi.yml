@@ -1,0 +1,130 @@
+openapi: 3.1.0
+info:
+  title: DNV Class Status Certificates API
+  description: DNV's Class Status API provides programmatic access to vessel classification data. Authentication uses OAuth 2.0 with Azure AD B2C as the identity provider. Access tokens are obtained from the Microsoft identity platform and are valid for approximately 20 minutes. Access requires a separate API contract with DNV. The API supports retry logic using exponential backoff for resilience.
+  version: 1.0.0
+  contact:
+    name: DNV Support
+    url: https://help-center.veracity.com/en/
+  license:
+    name: DNV Terms
+    url: https://www.dnv.com/terms/
+servers:
+- url: https://maritime.dnv.com/api/cs-iacs-customer
+  description: DNV Class Status API Production
+security:
+- oauth2: []
+tags:
+- name: Certificates
+  description: Classification certificates and survey documents
+paths:
+  /vessels/{imoNumber}/certificates:
+    get:
+      operationId: getVesselCertificates
+      summary: Get vessel classification certificates
+      description: Returns all classification certificates for the specified vessel. A single request may return multiple files as multipart content with boundary markers separating each file.
+      tags:
+      - Certificates
+      parameters:
+      - name: imoNumber
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: ^[0-9]{7}$
+      - name: certificateType
+        in: query
+        description: Filter by certificate type
+        schema:
+          type: string
+          enum:
+          - CLASS
+          - STATUTORY
+          - SURVEY_REPORT
+          - ENTRY_IN_CLASS
+      - name: status
+        in: query
+        description: Filter by certificate validity status
+        schema:
+          type: string
+          enum:
+          - VALID
+          - EXPIRED
+          - WITHDRAWN
+      responses:
+        '200':
+          description: Vessel certificates
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CertificateList'
+            multipart/mixed:
+              schema:
+                type: string
+                format: binary
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        requestId:
+          type: string
+    CertificateList:
+      type: object
+      properties:
+        imoNumber:
+          type: string
+        certificates:
+          type: array
+          items:
+            $ref: '#/components/schemas/Certificate'
+    Certificate:
+      type: object
+      properties:
+        certificateId:
+          type: string
+        certificateType:
+          type: string
+          enum:
+          - CLASS
+          - STATUTORY
+          - SURVEY_REPORT
+          - ENTRY_IN_CLASS
+        title:
+          type: string
+        issueDate:
+          type: string
+          format: date
+        expiryDate:
+          type: string
+          format: date
+        status:
+          type: string
+          enum:
+          - VALID
+          - EXPIRED
+          - WITHDRAWN
+        issuingOffice:
+          type: string
+  responses:
+    NotFound:
+      description: Vessel not found in DNV register
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: OAuth 2.0 via Azure AD B2C. Tokens obtained from https://login.microsoftonline.com/dnvglb2cprod.onmicrosoft.com/oauth2/token using client credentials grant with resource ID c916a223-f3d4-4d43-b709-cfcd77ff4a05.
+      flows:
+        clientCredentials:
+          tokenUrl: https://login.microsoftonline.com/dnvglb2cprod.onmicrosoft.com/oauth2/token
+          scopes:
+            class_status:read: Read vessel classification status
