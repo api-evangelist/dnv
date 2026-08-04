@@ -1,0 +1,18 @@
+{
+  "provider": "dnv",
+  "sources": [
+    "dnv-certificates-api-openapi.yml",
+    "dnv-surveys-api-openapi.yml",
+    "dnv-vessels-api-openapi.yml"
+  ],
+  "outputs": [
+    "dnv-certificates-api-openapi.yml",
+    "dnv-surveys-api-openapi.yml",
+    "dnv-vessels-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
