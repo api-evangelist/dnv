@@ -1,0 +1,600 @@
+{
+  "item": [
+    {
+      "id": "5b033130-1dec-4ae1-9042-6e8ada2ac7d1",
+      "name": "Vessels",
+      "description": {
+        "content": "Vessel classification status and information",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e615c38b-f969-4eb0-a6a6-ca0dd1f18f45",
+          "name": "Search vessels by classification criteria",
+          "request": {
+            "name": "Search vessels by classification criteria",
+            "description": {
+              "content": "Searches for vessels in DNV's classification register. Supports filtering by vessel name, IMO number, flag state, ship type, and classification status. Returns vessel summaries including class notation and current status.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vessels"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "imoNumber",
+                  "value": "<string>",
+                  "description": "IMO vessel identification number (7 digits)"
+                },
+                {
+                  "disabled": false,
+                  "key": "vesselName",
+                  "value": "<string>",
+                  "description": "Vessel name (partial match supported)"
+                },
+                {
+                  "disabled": false,
+                  "key": "flagState",
+                  "value": "<string>",
+                  "description": "ISO 3166-1 alpha-2 country code for flag state"
+                },
+                {
+                  "disabled": false,
+                  "key": "shipType",
+                  "value": "<string>",
+                  "description": "DNV ship type classification code"
+                },
+                {
+                  "disabled": false,
+                  "key": "classStatus",
+                  "value": "<string>",
+                  "description": "Current class status filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "63ba0821-7d1a-4b58-9922-e50d08998579",
+              "name": "List of vessels matching search criteria",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vessels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "imoNumber",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "vesselName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "flagState",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "shipType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "classStatus",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"total\": 2952,\n  \"offset\": 1533,\n  \"vessels\": [\n    {\n      \"imoNumber\": \"string\",\n      \"vesselName\": \"string\",\n      \"flagState\": \"string\",\n      \"shipType\": \"string\",\n      \"classStatus\": \"SUSPENDED\",\n      \"classNotation\": \"string\"\n    },\n    {\n      \"imoNumber\": \"string\",\n      \"vesselName\": \"string\",\n      \"flagState\": \"string\",\n      \"shipType\": \"string\",\n      \"classStatus\": \"DELETED\",\n      \"classNotation\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "20408fbb-b2f9-4f00-9992-0126200005e0",
+              "name": "Authentication token missing or expired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vessels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "imoNumber",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "vesselName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "flagState",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "shipType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "classStatus",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"requestId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aee121a2-d9ff-469e-b2f4-be5b99397efa",
+              "name": "No API contract with DNV for this resource",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vessels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "imoNumber",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "vesselName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "flagState",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "shipType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "classStatus",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"requestId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "74e0db5f-59ba-4ec9-a1c0-7e6cc593ccd6",
+          "name": "Get vessel classification details",
+          "request": {
+            "name": "Get vessel classification details",
+            "description": {
+              "content": "Returns detailed classification information for a specific vessel identified by IMO number, including class notation, survey status, and certificates.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vessels",
+                ":imoNumber"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "imoNumber",
+                  "description": "(Required) IMO vessel identification number (7 digits)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3894d16b-9bea-408f-b4f8-cfc95d8bb737",
+              "name": "Vessel classification details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vessels",
+                    ":imoNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "imoNumber",
+                      "description": "(Required) IMO vessel identification number (7 digits)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Response format",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"imoNumber\": \"string\",\n  \"vesselName\": \"string\",\n  \"flagState\": \"string\",\n  \"shipType\": \"string\",\n  \"classStatus\": \"CLASSED\",\n  \"classNotation\": \"string\",\n  \"vesselOwner\": \"string\",\n  \"technicalManager\": \"string\",\n  \"buildYear\": 4856,\n  \"grossTonnage\": 2736.3808624240683,\n  \"deadweightTonnage\": 2906.292164390507,\n  \"length\": 1957.9776947501682,\n  \"beam\": 6112.2119567270065,\n  \"draught\": 8488.10380598111,\n  \"mainEngineType\": \"string\",\n  \"mainEnginePower\": 8615.046900640267,\n  \"hullMaterial\": \"STEEL\",\n  \"surveys\": {\n    \"lastAnnualSurvey\": \"1959-11-14\",\n    \"nextAnnualSurveyDue\": \"2008-01-03\",\n    \"lastSpecialSurvey\": \"1964-12-15\",\n    \"nextSpecialSurveyDue\": \"1990-08-30\"\n  },\n  \"nextSurveyDue\": \"2014-09-09\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "884d47be-5d0b-46ff-9e26-dbe6eac5f3e1",
+              "name": "Vessel not found in DNV register",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vessels",
+                    ":imoNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "imoNumber",
+                      "description": "(Required) IMO vessel identification number (7 digits)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Response format",
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"requestId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e9bf4041-d050-4dc4-aff6-a5fd342900e4",
+          "name": "Get fleet classification status",
+          "request": {
+            "name": "Get fleet classification status",
+            "description": {
+              "content": "Returns classification status for a fleet of vessels. Useful for fleet managers to monitor the overall compliance status of their vessels.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "fleets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "imoNumbers",
+                  "value": "<string>",
+                  "description": "Comma-separated list of IMO numbers (max 100)"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeExpiredCerts",
+                  "value": "false"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "03c81979-d2d7-443b-b51b-1efbdbc02c26",
+              "name": "Fleet status summary",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fleets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "imoNumbers",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeExpiredCerts",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestedCount\": 3686,\n  \"foundCount\": 9196,\n  \"vessels\": [\n    {\n      \"imoNumber\": \"string\",\n      \"vesselName\": \"string\",\n      \"classStatus\": \"string\",\n      \"nextSurveyDue\": \"1965-07-14\",\n      \"certificatesExpiringSoon\": 3002\n    },\n    {\n      \"imoNumber\": \"string\",\n      \"vesselName\": \"string\",\n      \"classStatus\": \"string\",\n      \"nextSurveyDue\": \"1988-07-21\",\n      \"certificatesExpiringSoon\": 9065\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://maritime.dnv.com/api/cs-iacs-customer",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "class_status:read"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://login.microsoftonline.com/dnvglb2cprod.onmicrosoft.com/oauth2/token"
+      },
+      {
+        "key": "grant_type",
+        "value": "client_credentials"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "77bde823-450f-4ba5-a206-4af06eb1263b",
+    "name": "DNV Class Status Certificates Vessels API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "DNV's Class Status API provides programmatic access to vessel classification data. Authentication uses OAuth 2.0 with Azure AD B2C as the identity provider. Access tokens are obtained from the Microsoft identity platform and are valid for approximately 20 minutes. Access requires a separate API contract with DNV. The API supports retry logic using exponential backoff for resilience.\n\nContact Support:\n Name: DNV Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "DNV Class Status Certificates API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "https://login.microsoftonline.com/dnvglb2cprod.onmicrosoft.com/oauth2/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Certificates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get vessel classification certificates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://maritime.dnv.com/api/cs-iacs-customer/vessels/:imoNumber/certificates",
+            "params": [
+              {
+                "name": "imoNumber",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "certificateType",
+                "value": "",
+                "type": "query",
+                "description": "Filter by certificate type"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by certificate validity status"
+              }
+            ]
+          },
+          "docs": "Returns all classification certificates for the specified vessel. A single request may return multiple files as multipart content with boundary markers separating each file."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

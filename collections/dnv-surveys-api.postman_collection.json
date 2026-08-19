@@ -1,0 +1,217 @@
+{
+  "item": [
+    {
+      "id": "7608171c-e8b2-47e6-aacd-dcc7a830bc15",
+      "name": "Surveys",
+      "description": {
+        "content": "Survey schedules and records",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8cae44e8-fc97-473e-b586-72fb72ccc08c",
+          "name": "Get vessel survey records and schedule",
+          "request": {
+            "name": "Get vessel survey records and schedule",
+            "description": {
+              "content": "Returns the survey schedule and history for a specific vessel.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vessels",
+                ":imoNumber",
+                "surveys"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "surveyType",
+                  "value": "<string>",
+                  "description": "Filter by survey type"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "imoNumber",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "43860c21-db3a-42d5-8f52-0d315363c1a7",
+              "name": "Survey records and schedule",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vessels",
+                    ":imoNumber",
+                    "surveys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "surveyType",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "imoNumber",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"imoNumber\": \"string\",\n  \"surveys\": [\n    {\n      \"surveyId\": \"string\",\n      \"surveyType\": \"ANNUAL\",\n      \"surveyDate\": \"1947-05-24\",\n      \"nextDueDate\": \"2022-08-27\",\n      \"port\": \"string\",\n      \"surveyorName\": \"string\",\n      \"result\": \"PASSED\",\n      \"remarks\": \"string\"\n    },\n    {\n      \"surveyId\": \"string\",\n      \"surveyType\": \"ANNUAL\",\n      \"surveyDate\": \"2023-04-13\",\n      \"nextDueDate\": \"2023-05-12\",\n      \"port\": \"string\",\n      \"surveyorName\": \"string\",\n      \"result\": \"PASSED\",\n      \"remarks\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1444e48f-1e39-4f3c-868a-912d30f027b4",
+              "name": "Vessel not found in DNV register",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vessels",
+                    ":imoNumber",
+                    "surveys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "surveyType",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "imoNumber",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"requestId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://maritime.dnv.com/api/cs-iacs-customer",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "class_status:read"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://login.microsoftonline.com/dnvglb2cprod.onmicrosoft.com/oauth2/token"
+      },
+      {
+        "key": "grant_type",
+        "value": "client_credentials"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f6a14596-bc87-4466-9f0f-297fc78e4f5a",
+    "name": "DNV Class Status Certificates Surveys API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "DNV's Class Status API provides programmatic access to vessel classification data. Authentication uses OAuth 2.0 with Azure AD B2C as the identity provider. Access tokens are obtained from the Microsoft identity platform and are valid for approximately 20 minutes. Access requires a separate API contract with DNV. The API supports retry logic using exponential backoff for resilience.\n\nContact Support:\n Name: DNV Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "DNV Class Status Certificates Surveys API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "https://login.microsoftonline.com/dnvglb2cprod.onmicrosoft.com/oauth2/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Surveys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get vessel survey records and schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://maritime.dnv.com/api/cs-iacs-customer/vessels/:imoNumber/surveys",
+            "params": [
+              {
+                "name": "imoNumber",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "surveyType",
+                "value": "",
+                "type": "query",
+                "description": "Filter by survey type"
+              }
+            ]
+          },
+          "docs": "Returns the survey schedule and history for a specific vessel."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
