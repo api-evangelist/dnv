@@ -1,0 +1,48 @@
+slug: dnv
+provider: DNV
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Transportation & Logistics
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 3
+edges:
+- tag: Certificates
+  spec_file: dnv-certificates-api-openapi.yml
+  capability_id: BC-2430.50
+  capability_id_l1: BC-2430
+  capability_name: Fleet Compliance and Certification Management
+  confidence: 0.85
+  evidence: GET /vessels/{imoNumber}/certificates — 'Get vessel classification certificates' (CertificateList,
+    Certificate)
+  reason: DNV is a class society and the operation returns classification certificates for a vessel by
+    IMO number — precisely certification of fleet assets with regulators and class societies (BC-2430.50).
+- tag: Vessels
+  spec_file: dnv-vessels-api-openapi.yml
+  capability_id: BC-2430.50
+  capability_id_l1: BC-2430
+  capability_name: Fleet Compliance and Certification Management
+  confidence: 0.8
+  evidence: GET /vessels/{imoNumber} getVessel 'Get vessel classification details'; GET /fleets 'Get fleet
+    classification status'; schemas SurveySummary, FleetStatus — 'programmatic access to vessel classification
+    data'
+  reason: The operations expose classification/survey status of vessels and fleets held by a class society,
+    which is exactly registration/certification compliance of mobile assets with regulators and class
+    societies. Not booking, not telematics — the payload is certificates and survey summaries keyed by
+    IMO number.
+- tag: Surveys
+  spec_file: dnv-surveys-api-openapi.yml
+  capability_id: BC-2430.50
+  capability_id_l1: BC-2430
+  capability_name: Fleet Compliance and Certification Management
+  confidence: 0.75
+  evidence: GET /vessels/{imoNumber}/surveys — 'Get vessel survey records and schedule' (Survey, SurveyList)
+  reason: Class survey records and due dates for a vessel are the inspection basis of class certification,
+    so fleet compliance and certification management fits best. Some chance the intended reading is fleet
+    maintenance scheduling, hence 0.75 rather than higher.

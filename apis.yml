@@ -117,6 +117,9 @@ apis:
   - type: Authentication
     url: https://maritime.dnv.com/api/cs-iacs-customer
 common:
+  - type: CapabilityMap
+    url: capabilities/dnv-capability-edges.yml
+    name: DNV Business Capability Map
   - type: AgenticAccess
     url: agentic-access/dnv-agentic-access.yml
   - type: VulnerabilityDisclosure
