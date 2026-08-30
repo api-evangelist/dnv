@@ -36,7 +36,6 @@ apis:
   - Energy
   - IoT
   - Maritime
-  image: https://raw.githubusercontent.com/api-evangelist/dnv/refs/heads/main/image.png
   humanURL: https://www.veracity.com/
   baseURL: https://api.veracity.com
   properties:
@@ -58,7 +57,6 @@ apis:
   - Fleet Management
   - Maritime
   - Vessel Registry
-  image: https://raw.githubusercontent.com/api-evangelist/dnv/refs/heads/main/image.png
   humanURL: https://vesselregister.dnv.com/vesselregister
   baseURL: https://vesselregister.dnv.com
   properties:
