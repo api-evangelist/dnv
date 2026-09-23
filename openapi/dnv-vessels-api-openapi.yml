@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: DNV Class Status Certificates Vessels API
+  title: DNV Class Status Vessels API
   description: DNV's Class Status API provides programmatic access to vessel classification data. Authentication uses OAuth 2.0 with Azure AD B2C as the identity provider. Access tokens are obtained from the Microsoft identity platform and are valid for approximately 20 minutes. Access requires a separate API contract with DNV. The API supports retry logic using exponential backoff for resilience.
   version: 1.0.0
   contact:
@@ -152,19 +152,42 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication token missing or expired
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     NotFound:
       description: Vessel not found in DNV register
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication token missing or expired
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    VesselSummary:
+      type: object
+      properties:
+        imoNumber:
+          type: string
+          description: IMO vessel identification number
+        vesselName:
+          type: string
+        flagState:
+          type: string
+          description: ISO 3166-1 alpha-2 flag state code
+        shipType:
+          type: string
+        classStatus:
+          type: string
+          enum:
+          - CLASSED
+          - SUSPENDED
+          - WITHDRAWN
+          - DELETED
+        classNotation:
+          type: string
+          description: Full DNV class notation string
     FleetStatus:
       type: object
       properties:
@@ -244,38 +267,6 @@ components:
         nextSpecialSurveyDue:
           type: string
           format: date
-    VesselSummary:
-      type: object
-      properties:
-        imoNumber:
-          type: string
-          description: IMO vessel identification number
-        vesselName:
-          type: string
-        flagState:
-          type: string
-          description: ISO 3166-1 alpha-2 flag state code
-        shipType:
-          type: string
-        classStatus:
-          type: string
-          enum:
-          - CLASSED
-          - SUSPENDED
-          - WITHDRAWN
-          - DELETED
-        classNotation:
-          type: string
-          description: Full DNV class notation string
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-        requestId:
-          type: string
     VesselList:
       type: object
       properties:
@@ -287,6 +278,15 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/VesselSummary'
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        requestId:
+          type: string
   securitySchemes:
     oauth2:
       type: oauth2

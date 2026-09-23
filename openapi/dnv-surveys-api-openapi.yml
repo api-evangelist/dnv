@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: DNV Class Status Certificates Surveys API
+  title: DNV Class Status Surveys API
   description: DNV's Class Status API provides programmatic access to vessel classification data. Authentication uses OAuth 2.0 with Azure AD B2C as the identity provider. Access tokens are obtained from the Microsoft identity platform and are valid for approximately 20 minutes. Access requires a separate API contract with DNV. The API supports retry logic using exponential backoff for resilience.
   version: 1.0.0
   contact:
@@ -55,24 +55,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    SurveyList:
-      type: object
-      properties:
-        imoNumber:
-          type: string
-        surveys:
-          type: array
-          items:
-            $ref: '#/components/schemas/Survey'
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-        requestId:
-          type: string
     Survey:
       type: object
       properties:
@@ -105,6 +87,24 @@ components:
           - FAILED
           - ONGOING
         remarks:
+          type: string
+    SurveyList:
+      type: object
+      properties:
+        imoNumber:
+          type: string
+        surveys:
+          type: array
+          items:
+            $ref: '#/components/schemas/Survey'
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        requestId:
           type: string
   responses:
     NotFound:

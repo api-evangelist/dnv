@@ -1,9 +1,7 @@
 {
   "provider": "dnv",
   "sources": [
-    "dnv-certificates-api-openapi.yml",
-    "dnv-surveys-api-openapi.yml",
-    "dnv-vessels-api-openapi.yml"
+    "_original/dnv-class-status-openapi.yml"
   ],
   "outputs": [
     "dnv-certificates-api-openapi.yml",
@@ -13,6 +11,14 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "dnv-class-status-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "dnv-certificates-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "dnv-surveys-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "dnv-vessels-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
