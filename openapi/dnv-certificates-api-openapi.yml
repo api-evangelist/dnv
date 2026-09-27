@@ -65,6 +65,13 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    NotFound:
+      description: Vessel not found in DNV register
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     Certificate:
       type: object
@@ -112,13 +119,6 @@ components:
           type: string
         requestId:
           type: string
-  responses:
-    NotFound:
-      description: Vessel not found in DNV register
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     oauth2:
       type: oauth2
