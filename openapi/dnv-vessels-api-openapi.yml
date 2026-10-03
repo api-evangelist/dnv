@@ -145,7 +145,37 @@ paths:
               schema:
                 $ref: '#/components/schemas/FleetStatus'
 components:
+  responses:
+    Unauthorized:
+      description: Authentication token missing or expired
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Vessel not found in DNV register
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: No API contract with DNV for this resource
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    VesselList:
+      type: object
+      properties:
+        total:
+          type: integer
+        offset:
+          type: integer
+        vessels:
+          type: array
+          items:
+            $ref: '#/components/schemas/VesselSummary'
     Vessel:
       allOf:
       - $ref: '#/components/schemas/VesselSummary'
@@ -187,6 +217,21 @@ components:
           nextSurveyDue:
             type: string
             format: date
+    SurveySummary:
+      type: object
+      properties:
+        lastAnnualSurvey:
+          type: string
+          format: date
+        nextAnnualSurveyDue:
+          type: string
+          format: date
+        lastSpecialSurvey:
+          type: string
+          format: date
+        nextSpecialSurveyDue:
+          type: string
+          format: date
     VesselSummary:
       type: object
       properties:
@@ -210,26 +255,6 @@ components:
         classNotation:
           type: string
           description: Full DNV class notation string
-    VesselList:
-      type: object
-      properties:
-        total:
-          type: integer
-        offset:
-          type: integer
-        vessels:
-          type: array
-          items:
-            $ref: '#/components/schemas/VesselSummary'
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-        requestId:
-          type: string
     FleetStatus:
       type: object
       properties:
@@ -253,40 +278,15 @@ components:
                 format: date
               certificatesExpiringSoon:
                 type: integer
-    SurveySummary:
+    Error:
       type: object
       properties:
-        lastAnnualSurvey:
+        code:
           type: string
-          format: date
-        nextAnnualSurveyDue:
+        message:
           type: string
-          format: date
-        lastSpecialSurvey:
+        requestId:
           type: string
-          format: date
-        nextSpecialSurveyDue:
-          type: string
-          format: date
-  responses:
-    Unauthorized:
-      description: Authentication token missing or expired
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Vessel not found in DNV register
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: No API contract with DNV for this resource
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     oauth2:
       type: oauth2

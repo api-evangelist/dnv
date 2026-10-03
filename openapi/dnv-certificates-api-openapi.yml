@@ -65,14 +65,16 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    NotFound:
-      description: Vessel not found in DNV register
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
+    CertificateList:
+      type: object
+      properties:
+        imoNumber:
+          type: string
+        certificates:
+          type: array
+          items:
+            $ref: '#/components/schemas/Certificate'
     Certificate:
       type: object
       properties:
@@ -101,15 +103,6 @@ components:
           - WITHDRAWN
         issuingOffice:
           type: string
-    CertificateList:
-      type: object
-      properties:
-        imoNumber:
-          type: string
-        certificates:
-          type: array
-          items:
-            $ref: '#/components/schemas/Certificate'
     Error:
       type: object
       properties:
@@ -119,6 +112,13 @@ components:
           type: string
         requestId:
           type: string
+  responses:
+    NotFound:
+      description: Vessel not found in DNV register
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     oauth2:
       type: oauth2
