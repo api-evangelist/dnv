@@ -75,6 +75,15 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Certificate'
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        requestId:
+          type: string
     Certificate:
       type: object
       properties:
@@ -102,15 +111,6 @@ components:
           - EXPIRED
           - WITHDRAWN
         issuingOffice:
-          type: string
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-        requestId:
           type: string
   responses:
     NotFound:

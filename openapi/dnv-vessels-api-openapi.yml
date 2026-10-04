@@ -146,8 +146,8 @@ paths:
                 $ref: '#/components/schemas/FleetStatus'
 components:
   responses:
-    Unauthorized:
-      description: Authentication token missing or expired
+    Forbidden:
+      description: No API contract with DNV for this resource
       content:
         application/json:
           schema:
@@ -158,24 +158,51 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: No API contract with DNV for this resource
+    Unauthorized:
+      description: Authentication token missing or expired
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
-    VesselList:
+    SurveySummary:
       type: object
       properties:
-        total:
-          type: integer
-        offset:
-          type: integer
-        vessels:
-          type: array
-          items:
-            $ref: '#/components/schemas/VesselSummary'
+        lastAnnualSurvey:
+          type: string
+          format: date
+        nextAnnualSurveyDue:
+          type: string
+          format: date
+        lastSpecialSurvey:
+          type: string
+          format: date
+        nextSpecialSurveyDue:
+          type: string
+          format: date
+    VesselSummary:
+      type: object
+      properties:
+        imoNumber:
+          type: string
+          description: IMO vessel identification number
+        vesselName:
+          type: string
+        flagState:
+          type: string
+          description: ISO 3166-1 alpha-2 flag state code
+        shipType:
+          type: string
+        classStatus:
+          type: string
+          enum:
+          - CLASSED
+          - SUSPENDED
+          - WITHDRAWN
+          - DELETED
+        classNotation:
+          type: string
+          description: Full DNV class notation string
     Vessel:
       allOf:
       - $ref: '#/components/schemas/VesselSummary'
@@ -217,44 +244,15 @@ components:
           nextSurveyDue:
             type: string
             format: date
-    SurveySummary:
+    Error:
       type: object
       properties:
-        lastAnnualSurvey:
+        code:
           type: string
-          format: date
-        nextAnnualSurveyDue:
+        message:
           type: string
-          format: date
-        lastSpecialSurvey:
+        requestId:
           type: string
-          format: date
-        nextSpecialSurveyDue:
-          type: string
-          format: date
-    VesselSummary:
-      type: object
-      properties:
-        imoNumber:
-          type: string
-          description: IMO vessel identification number
-        vesselName:
-          type: string
-        flagState:
-          type: string
-          description: ISO 3166-1 alpha-2 flag state code
-        shipType:
-          type: string
-        classStatus:
-          type: string
-          enum:
-          - CLASSED
-          - SUSPENDED
-          - WITHDRAWN
-          - DELETED
-        classNotation:
-          type: string
-          description: Full DNV class notation string
     FleetStatus:
       type: object
       properties:
@@ -278,15 +276,17 @@ components:
                 format: date
               certificatesExpiringSoon:
                 type: integer
-    Error:
+    VesselList:
       type: object
       properties:
-        code:
-          type: string
-        message:
-          type: string
-        requestId:
-          type: string
+        total:
+          type: integer
+        offset:
+          type: integer
+        vessels:
+          type: array
+          items:
+            $ref: '#/components/schemas/VesselSummary'
   securitySchemes:
     oauth2:
       type: oauth2
