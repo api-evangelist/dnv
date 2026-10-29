@@ -1,4 +1,4 @@
-# DNV (dnv)
+# DNV
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,108 +66,153 @@
 
 DNV is a global classification, certification, and assurance provider for the maritime, energy, and industrial sectors. The API portfolio includes the Class Status API for vessel classification data, the Veracity industry data platform, and the public Vessel Register, supporting fleet management, regulatory compliance, and operational analytics workflows.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/dnv/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/dnv/refs/heads/main/apis.yml)
+**Areas:** Maritime · Energy · Classification · Vessel · Data Platform
 
-## Tags
+## DNV on APIs.io
 
-- Maritime
-- Energy
-- Classification
-- Vessel
-- Data Platform
+Everything profiled for DNV is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/dnv/](https://apis.io/providers/dnv/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (5)
 
-- **Modified:** 2026-05-19
+- [DNV Veracity Platform API](https://apis.io/apis/dnv/dnv-veracity-api/) — DNV Veracity is an open and secure industry data platform facilitating exchange of datasets, APIs, applications, and insights across maritime, oil and gas,…
+- [DNV Vessel Register](https://apis.io/apis/dnv/dnv-vessel-register-api/) — DNV Vessel Register provides access to DNV's public registry of classified vessels including vessel identification, classification status, certificates, and…
+- [DNV Certificates API](https://apis.io/apis/dnv/dnv-certificates-api/) — Classification certificates and survey documents
+- [DNV Surveys API](https://apis.io/apis/dnv/dnv-surveys-api/) — Survey schedules and records
+- [DNV Vessels API](https://apis.io/apis/dnv/dnv-vessels-api/) — Vessel classification status and information
 
-## APIs
+### Published properties
 
-### DNV Class Status API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-DNV's Class Status API provides programmatic access to vessel classification data. Authentication uses OAuth 2.0 with Azure AD B2C as the identity provider. Access tokens are obtained from https://login.microsoftonline.com/dnvglb2cprod.onmicrosoft.com/oauth2/token and are valid for approximately 20 minutes. Access requires a separate API contract with DNV.
+#### Agentic access (1)
 
-- **Human URL:** [https://maritime.dnv.com/api/cs-iacs-customer](https://maritime.dnv.com/api/cs-iacs-customer)
-- **Base URL:** `https://maritime.dnv.com/api/cs-iacs-customer`
+Which operations an agent can call, which act, and which need a human in the loop.
 
-#### Tags
+- [Dnv Agentic Access](https://apis.io/agentic-access/dnv/dnv-agentic-access/)
 
-- Azure AD
-- Classification
-- Maritime
-- OAuth2
-- Safety
-- Vessel
+#### JSON Schema (1)
 
-#### Properties
+The data models the API reads and writes.
 
-- [Reference](https://maritime.dnv.com/api/cs-iacs-customer/docs/index.html)
-- [Documentation](https://maritime.dnv.com/api/cs-iacs-customer)
-- [Authentication](https://maritime.dnv.com/api/cs-iacs-customer)
-- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/dnv/refs/heads/main/openapi/dnv-class-status-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/dnv-class-status.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/dnv-class-status.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [DNV Classified Vessel](https://apis.io/schemas/dnv/dnv-vessel/)
 
-### DNV Veracity Platform API
+#### JSON-LD (1)
 
-DNV Veracity is an open and secure industry data platform facilitating exchange of datasets, APIs, applications, and insights across maritime, oil and gas, and energy sectors. Veracity APIs enable access to operational vessel data, maritime analytics, and fleet management services for over 18,000 companies and 200,000 users.
+Linked-data contexts for the provider's vocabulary.
 
-- **Human URL:** [https://www.veracity.com/](https://www.veracity.com/)
-- **Base URL:** `https://api.veracity.com`
+- [Dnv Context](https://apis.io/jsonld/dnv/dnv-context/)
 
-#### Tags
+#### Collections (4)
 
-- Analytics
-- Data Platform
-- Energy
-- IoT
-- Maritime
+Postman and Open Collection request collections.
 
-#### Properties
+- [DNV Class Status Certificates API](https://apis.io/collections/dnv/open-dnv-certificates-api/)
+- [DNV Class Status API](https://apis.io/collections/dnv/open-dnv-class-status/)
+- [DNV Class Status Certificates Surveys API](https://apis.io/collections/dnv/open-dnv-surveys-api/)
+- [DNV Class Status Certificates Vessels API](https://apis.io/collections/dnv/open-dnv-vessels-api/)
 
-- [Documentation](https://developer.veracity.com/docs/section/api-explorer/api-explorer)
-- [Reference](https://developer.veracity.com/docs/section/datastandards/operationalvesseldata)
-- [Portal](https://www.veracity.com/)
-- [Postman Collection](collections/dnv-class-status.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/dnv-class-status.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Governance rules (1)
 
-### DNV Vessel Register
+Spectral rulesets for the provider's contracts.
 
-DNV Vessel Register provides access to DNV's public registry of classified vessels including vessel identification, classification status, certificates, and survey history. The register supports fleet management and regulatory compliance workflows.
+- [DNV — jsonschema rules](https://apis.io/rules/dnv/dnv-jsonschema-spectral-rules/)
 
-- **Human URL:** [https://vesselregister.dnv.com/vesselregister](https://vesselregister.dnv.com/vesselregister)
-- **Base URL:** `https://vesselregister.dnv.com`
+#### Security (3)
 
-#### Tags
+Authentication, trust centre, and vulnerability disclosure.
 
-- Classification
-- Fleet Management
-- Maritime
-- Vessel Registry
+- [Dnv Authentication](https://apis.io/security/dnv/dnv-authentication/)
+- [Dnv Domain Security](https://apis.io/security/dnv/dnv-domain-security/)
+- [Dnv Vulnerability Disclosure](https://apis.io/security/dnv/dnv-vulnerability-disclosure/)
 
-#### Properties
+#### OAuth scopes (1)
 
-- [Documentation](https://vesselregister.dnv.com/vesselregister)
-- [Postman Collection](collections/dnv-class-status.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/dnv-class-status.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+The permissions the API asks for.
 
-## Common Properties
+- [Dnv Scopes](https://apis.io/scopes/dnv/dnv-scopes/)
 
-- [GitHub Organization](https://github.com/dnv-opensource)
-- [LinkedIn](https://www.linkedin.com/company/det-norske-veritas-dnv-gl-)
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Dnv Plans Pricing](https://apis.io/plans/dnv/dnv-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Dnv Rate Limits](https://apis.io/rate-limits/dnv/dnv-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Dnv Finops](https://apis.io/finops/dnv/dnv-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
 - [Website](https://www.dnv.com/)
-- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/dnv/refs/heads/main/openapi/dnv-class-status-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [JSON Schema](https://raw.githubusercontent.com/api-evangelist/dnv/refs/heads/main/json-schema/dnv-vessel-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [J S O N L D Context](https://raw.githubusercontent.com/api-evangelist/dnv/refs/heads/main/json-ld/dnv-context.jsonld)
-- [Portal](https://www.veracity.com/)
 - [Documentation](https://developer.veracity.com/docs/section/api-explorer/api-explorer)
-- [Authentication](https://maritime.dnv.com/api/cs-iacs-customer)
+- [Getting started](https://www.dnv.com/maritime/)
 - [Support](https://help-center.veracity.com/en/)
-- [Support](https://support.veracity.com/)
-- [Privacy Policy](https://www.dnv.com/privacy/)
-- [Terms of Service](https://www.dnv.com/terms/)
-- [Status Page](https://vesselregister.dnv.com/vesselregister)
-- [Getting Started](https://www.dnv.com/maritime/)
+- [Terms of service](https://www.dnv.com/terms/)
+- [Privacy policy](https://www.dnv.com/privacy/)
+- [GitHub](https://github.com/dnv-opensource)
+- [Status](https://vesselregister.dnv.com/vesselregister)
 
-## Maintainers
+## API Evangelist rating
 
-**Email:** kin@apievangelist.com
+**Kin Score 47.0** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 57.5 |
+| Contract governance | 9.8 |
+| Operational transparency | 34.2 |
+| Developer ergonomics | 56.0 |
+| Access clarity | 26.3 |
+
+**Agent readiness 25.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | na |
+| MCP Server | — |
+| Auth Clarity | negotiable (partial credit) |
+| Idempotency | na |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | na |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 39.3** — Energy & Utilities
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/dnv/](https://apis.io/providers/dnv/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for DNV: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/dnv/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
